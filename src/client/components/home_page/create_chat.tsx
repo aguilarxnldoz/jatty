@@ -19,7 +19,7 @@ export default function CreateChat({setMenu}: {setMenu: React.Dispatch<React.Set
             body: JSON.stringify({username, chatVisibility}),
         });
 
-        if (!response.ok) throw new Error("Stupid ahh res");
+        if (!response.ok) throw new Error("Could not create chatroom.");
 
         const data = await response.json();
         console.log(data);

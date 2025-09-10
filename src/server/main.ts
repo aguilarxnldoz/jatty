@@ -22,20 +22,6 @@ app.get("/", (req, res) => {
     res.redirect("/jatty/home");
 });
 
-// connect to redis client
-// await client.connect();
-
-// start the server
-// ViteExpress.listen(app, PORT, async () => {
-//     try {
-//         console.log(`Server listening @ http://localhost:${PORT}`);
-//     } catch (e) {
-//         console.error(e);
-//     } finally {
-//         console.log("database nd server running");
-//     }
-// });
-
 const startServer = async () => {
     try {
         await client.connect();

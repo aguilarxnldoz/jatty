@@ -7,15 +7,14 @@ export const createChatRouter = express.Router();
 createChatRouter.post("/", async (req, res) => {
     try {
         const {username, chatVisibility} = req.body;
-
         if (!chatVisibility || !username) return res.status(400).json({success: false, message: "Invalid room details"});
 
         // lazy way of making a random 4 digit room id
         const roomId = randomRoomNumberGenerator(1000, 9999);
 
+        console.log("Saving room ID to database...");
         await client.rPush("chatrooms", `${roomId}`);
-
-        console.log("successfully pushed to redis");
+        console.log("Successfully saved room ID to redis");
 
         res.status(200).json({success: true, roomId: roomId});
     } catch (e) {
