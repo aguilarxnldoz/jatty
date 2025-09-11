@@ -15,7 +15,7 @@ export default function JattyMenu({setMenu}: {setMenu: React.Dispatch<React.SetS
                     id="jatty-menu-button"
                     className="rounded-2xl p-3"
                 >
-                    <button>join chat</button>
+                    <button onClick={() => setMenu(2)}>join chat</button>
                 </div>
             </div>
         </>

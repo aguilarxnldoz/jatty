@@ -1,7 +1,8 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {MenuSetter} from "../../types/menu_setter";
 
-export default function CreateChat({setMenu}: {setMenu: React.Dispatch<React.SetStateAction<number | null>>}) {
+export default function CreateChat({setMenu}: {setMenu: MenuSetter}) {
     const [username, setUsername] = useState<string>("anonymous");
     const [chatVisibility, setChatVisibility] = useState<string | null>(null);
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function CreateChat({setMenu}: {setMenu: React.Dispatch<React.Set
             return;
         }
 
-        const response = await fetch(`http://localhost:${import.meta.env.VITE_API_PORT}/createchat`, {
+        const response = await fetch(`http://localhost:${import.meta.env.VITE_API_PORT}/api/createchat`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({username, chatVisibility}),

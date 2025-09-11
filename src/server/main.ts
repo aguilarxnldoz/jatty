@@ -1,6 +1,6 @@
 import express from "express";
 import ViteExpress from "vite-express";
-import {createChatRouter} from "./routers/create_chat.ts";
+import {createChatApi} from "./api/create_chat.ts";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -8,6 +8,7 @@ dotenv.config();
 import {client} from "./database/redisClient.ts";
 
 import cors from "cors";
+import {chatroomsApi} from "./api/chatrooms.ts";
 
 export const app = express();
 const PORT: number = Number(process.env.PORT);
@@ -16,7 +17,9 @@ app.use(cors());
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-app.use("/createchat", createChatRouter);
+// API endpoints
+app.use("/api/createchat", createChatApi);
+app.use("/api/chatrooms", chatroomsApi);
 
 app.get("/", (req, res) => {
     res.redirect("/jatty/home");
