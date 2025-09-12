@@ -56,27 +56,6 @@ export default function CreateChat({setMenu}: {setMenu: MenuSetter}) {
                             onChange={handleNameChange}
                         />
                     </label>
-
-                    <fieldset className="w-full my-3 flex flex-col">
-                        <label className="flex flex-row space-x-5">
-                            <p>Public</p>
-                            <input
-                                type="radio"
-                                name="chatVisibility"
-                                value="public"
-                                onChange={handleVisibilityChange}
-                            />
-                        </label>
-                        <label className="flex flex-row space-x-5">
-                            <p>Private</p>
-                            <input
-                                type="radio"
-                                name="chatVisibility"
-                                value="private"
-                                onChange={handleVisibilityChange}
-                            />
-                        </label>
-                    </fieldset>
                     <input type="submit" />
                 </form>
             </div>

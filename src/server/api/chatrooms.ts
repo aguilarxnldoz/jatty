@@ -12,6 +12,7 @@ chatroomsApi.get("/", async (req, res) => {
         /* const chatroom = chatrooms.find((room) => room.includes("3983"));
         console.log(chatroom); */
 
+        // parse the data
         const chatrooms = chatroomsData.map((room) => {
             return room.slice(-4, -1);
         });

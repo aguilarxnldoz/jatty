@@ -9,8 +9,7 @@ createChatApi.post("/", async (req, res) => {
         const {username, chatVisibility} = req.body;
         if (!chatVisibility || !username) return res.status(400).json({success: false, message: "Invalid room details"});
 
-        // lazy way of making a random 4 digit room id
-        const roomId = randomRoomNumberGenerator(1000, 9999);
+        const roomId = randomRoomNumberGenerator();
 
         console.log("Saving room ID to database...");
         await client.sAdd("chatrooms", `room:${roomId}`);
