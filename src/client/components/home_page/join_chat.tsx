@@ -32,8 +32,6 @@ export default function JoinChat({setMenu}: {setMenu: MenuSetter}) {
                     </button>
                 </div>
 
-                <button onClick={() => console.log(chatrooms)}>test</button>
-
                 <h3 className="text-2xl">Join an open chat.</h3>
 
                 <div className="border-1 border-white m-auto w-[80%]">
