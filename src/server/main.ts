@@ -1,6 +1,8 @@
 import express from "express";
 import ViteExpress from "vite-express";
 import {createChatApi} from "./api/create_chat.ts";
+import {chatroomsApi} from "./api/chatrooms.ts";
+import {chatroomRouter} from "./api/chatroom.ts";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -8,7 +10,6 @@ dotenv.config();
 import {client} from "./database/redisClient.ts";
 
 import cors from "cors";
-import {chatroomsApi} from "./api/chatrooms.ts";
 
 export const app = express();
 const PORT: number = Number(process.env.PORT);
@@ -20,6 +21,10 @@ app.use(express.json());
 // API endpoints
 app.use("/api/createchat", createChatApi);
 app.use("/api/chatrooms", chatroomsApi);
+
+// page endpoints?
+// 💀 make sure that chats that dont exist in the db cannot have a page for themself
+// app.use("/jatty/chatroom", chatroomRouter);
 
 app.get("/", (req, res) => {
     res.redirect("/jatty/home");

@@ -21,6 +21,6 @@ chatroomsApi.get("/", async (req, res) => {
         return res.status(200).json({success: true, chatrooms: chatrooms});
     } catch (e) {
         console.error(`Failed to obtain chatrooms ${e}`);
-        return res.status(400).json({sucecss: false, data: null});
+        return res.status(500).json({sucecss: false, data: null});
     }
 });
