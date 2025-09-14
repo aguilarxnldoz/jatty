@@ -5,6 +5,7 @@ import {Chatroom} from "../logic/chatroom.ts";
 
 export const createChatApi = express.Router();
 
+/* "/api/createchat" */
 createChatApi.post("/", async (req, res) => {
     try {
         const {username, chatroomName} = req.body;

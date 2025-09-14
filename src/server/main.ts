@@ -22,11 +22,15 @@ app.use(express.json());
 app.use("/api/createchat", createChatApi);
 app.use("/api/chatrooms", chatroomsApi);
 
-// page endpoints?
-// 💀 make sure that chats that dont exist in the db cannot have a page for themself
-// app.use("/jatty/chatroom", chatroomRouter);
+// page endpoints
+app.use("/jatty/chatroom", chatroomRouter);
 
+// --------------------------------------------------------
 app.get("/", (req, res) => {
+    res.redirect("/jatty/home");
+});
+
+app.get("/jatty", (req, res) => {
     res.redirect("/jatty/home");
 });
 
