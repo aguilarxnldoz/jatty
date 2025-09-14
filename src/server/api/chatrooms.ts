@@ -8,6 +8,7 @@ chatroomsApi.get("/", async (req, res) => {
         if (!chatroomsData) return res.status(200).json({success: true, message: "No chats currently available..."});
 
         console.log(chatroomsData);
+
         // testing a way to find specific rooms out of the list (ignore);
         /* const chatroom = chatrooms.find((room) => room.includes("3983"));
         console.log(chatroom); */

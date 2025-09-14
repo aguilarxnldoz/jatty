@@ -23,7 +23,6 @@ export default function CreateChat({setMenu}: {setMenu: MenuSetter}) {
         if (!response.ok) throw new Error("Could not create chatroom.");
 
         const data = await response.json();
-        console.log(data);
         navigate(`/jatty/chatroom/${data.roomId}`);
     };
 

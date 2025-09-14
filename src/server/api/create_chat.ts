@@ -11,11 +11,11 @@ createChatApi.post("/", async (req, res) => {
         if (!chatroomName || !username) return res.status(400).json({success: false, message: "Invalid room details"});
 
         let roomId = await randomRoomNumberGenerator();
-
         const newChatroom = new Chatroom(roomId, chatroomName);
 
+        // save the roomId and room name in the database.
         console.log("Saving room ID to database...");
-        await client.sAdd("chatrooms", JSON.stringify(newChatroom.chatroom));
+        await client.sAdd("chatrooms", JSON.stringify(newChatroom.chatroomDetails));
         console.log("Successfully saved room ID to redis");
 
         res.status(200).json({success: true, roomId: roomId});

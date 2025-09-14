@@ -7,7 +7,7 @@ export class Chatroom {
         this.chatroomName = _chatroomName;
     }
 
-    public get chatroom(): Object {
+    public get chatroomDetails(): Object {
         return {roomId: this.roomId, chatroomName: this.chatroomName};
     }
 }
