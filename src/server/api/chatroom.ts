@@ -9,8 +9,6 @@ chatroomRouter.get("/:roomId", async (req, res) => {
         const {roomId} = req.params;
         if (!roomId) return res.status(400).json({success: false, message: "Invalid room ID"});
 
-        console.log("ROOM ID: ", roomId);
-
         const chatroomsData = await client.sMembers("chatrooms");
 
         const chatrooms = chatroomsData.map((room) => JSON.parse(room));
