@@ -1,9 +1,11 @@
 import {useState} from "react";
 import {MenuSetter} from "../../types/menu_setter";
-
+import {useNavigate} from "react-router-dom";
 export default function CreateChat({setMenu}: {setMenu: MenuSetter}) {
     const [username, setUsername] = useState<string>("anonymous");
     const [chatroomName, setChatroomName] = useState<string | null>(null);
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -22,8 +24,9 @@ export default function CreateChat({setMenu}: {setMenu: MenuSetter}) {
 
             const data = await response.json();
 
-            const chatroomResponse = await fetch(`/jatty/chatroom/${data.roomId}`);
-            if (!chatroomResponse.ok) throw new Error("u a bum");
+            // const chatroomResponse = await fetch(`/jatty/chatroom/${data.roomId}`);
+            // if (!chatroomResponse.ok) throw new Error("u a bum");
+            navigate(`/jatty/chatroom/${data.roomId}`);
         } catch (e) {
             console.error("Error: ", e);
         }

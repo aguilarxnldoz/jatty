@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import {MenuSetter} from "../../types/menu_setter";
 import IChatroom from "../../../../public/types/IChatroom";
+import {Link} from "react-router-dom";
 
 export default function JoinChat({setMenu}: {setMenu: MenuSetter}) {
     const [chatrooms, setChatrooms] = useState<IChatroom[]>([]);
@@ -31,15 +32,27 @@ export default function JoinChat({setMenu}: {setMenu: MenuSetter}) {
                         Back
                     </button>
                 </div>
+                <div>
+                    <h3 className="text-2xl">Join an open chat.</h3>
+                </div>
 
-                <h3 className="text-2xl">Join an open chat.</h3>
-
-                <div className="border-1 border-white m-auto w-[80%]">
-                    <ul>
+                <div className="border-1 border-white">
+                    <ul className="w-full">
                         {chatrooms.map((room) => (
-                            <div key={room.roomId}>
-                                <a href={`/jatty/chatroom/${room.roomId}`}>{room.chatroomName}</a>
-                            </div>
+                            <li
+                                key={room.roomId}
+                                className="w-full"
+                            >
+                                <div className="bg-neutral-300 border-y-2 border-black p-6 w-full">
+                                    <Link
+                                        className="text-black"
+                                        to={`/jatty/chatroom/${room.roomId}`}
+                                    >
+                                        {room.chatroomName}
+                                    </Link>
+                                    {/* <a href={`/api/chatrooms/${room.roomId}`}>{room.chatroomName}</a> */}
+                                </div>
+                            </li>
                         ))}
                     </ul>
                 </div>
