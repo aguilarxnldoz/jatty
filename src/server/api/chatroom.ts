@@ -1,9 +1,10 @@
 import express from "express";
-import {client} from "../database/redisClient.ts";
 import {ensureChatroomExistence} from "../middlewares/ensureChatroomExistence.ts";
 export const chatroomRouter = express.Router();
 
 /* "/jatty/chatroom/:roomId" */
+// For users trying to access a chatroom via browser URl
+
 chatroomRouter.get("/:roomId", ensureChatroomExistence, async (req, res, next) => {
     try {
         next();
