@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -5,11 +6,13 @@
     line-height: 1.5;
     font-weight: 400;
 
-    --platinum: #cfdbd5;
+    --platinum: #d9d9d9;
     --alabaster: #e8eddf;
     --saffron: #f5cb5c;
     --dark-charcoal: #242423;
     --jet: #333533;
+
+    --tf1: "Sora", sans-serif;
 
     color-scheme: light dark;
     color: rgba(255, 255, 255, 0.87);
@@ -23,12 +26,28 @@
 }
 
 body {
+    font-family: var(--tf1);
     margin: 0;
     padding: 0;
 }
 
 #app-wrapper {
-    max-width: fit-content;
     width: auto;
     margin: 2rem;
+}
+
+#jatty-menu-button {
+    background-color: var(--alabaster);
+    color: var(--jet);
+}
+
+#back-button,
+#submit-create-chat {
+    background-color: var(--alabaster);
+    color: var(--jet);
+}
+
+#create-chat-input {
+    background-color: var(--platinum);
+    color: var(--jet);
 }
