@@ -1,5 +1,6 @@
 import express from "express";
 import {ensureChatroomExistence} from "../middlewares/ensureChatroomExistence.ts";
+import {io} from "../main.ts";
 export const chatroomRouter = express.Router();
 
 /* "/jatty/chatroom/:roomId" */

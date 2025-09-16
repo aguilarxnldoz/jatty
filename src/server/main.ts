@@ -1,7 +1,7 @@
 /* Server Imports */
 import express from "express";
 import ViteExpress from "vite-express";
-import {createServer} from "http";
+import {createServer} from "node:http";
 import {Server} from "socket.io";
 
 /* Router/API imports */
@@ -15,8 +15,19 @@ dotenv.config();
 import {client} from "./database/redisClient.ts";
 import cors from "cors";
 
-export const app = express();
 const PORT: number = Number(process.env.PORT) || 3000;
+const app = express();
+const server = createServer(app);
+
+export const io = new Server(server, {
+    cors: {
+        origin: process.env.VITE_CLIENT_ORIGIN,
+        methods: ["GET", "POST"],
+    },
+});
+
+// makes sure that socket-io integrates with vite-express lib
+ViteExpress.bind(app, server);
 
 /* Middlewares nd shi */
 app.use(cors());
@@ -34,23 +45,25 @@ app.use("/jatty/chatroom", chatroomRouter);
 app.get("/", (req, res) => res.redirect("/jatty/home"));
 app.get("/jatty", (req, res) => res.redirect("/jatty/home"));
 
-/* 💀 trying to integrate socket.io here */
-
-// const httpServer = createServer(app);
-// ViteExpress.bind(app, httpServer);
-
-// const io = new Server(httpServer, {
-//     serveClient: false,
-//     pingInterval: 10000,
-//     cookie: false,
-// });
-
 const startServer = async () => {
     try {
         await client.connect();
         console.log("Redis Client connected");
-        ViteExpress.listen(app, PORT, () => {
+
+        server.listen(PORT, () => {
             console.log(`Server listening @ http://localhost:${PORT}`);
+        });
+
+        io.on("connection", (socket) => {
+            console.log("user has loaded into home", socket.id);
+
+            socket.on("roomJoined", () => {
+                console.log("chatroom joined");
+            });
+
+            socket.on("disconnect", (reason) => {
+                console.log("user has disconnected", reason);
+            });
         });
     } catch (e) {
         console.error(e);
