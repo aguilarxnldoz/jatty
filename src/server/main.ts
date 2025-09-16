@@ -54,6 +54,7 @@ const startServer = async () => {
             console.log(`Server listening @ http://localhost:${PORT}`);
         });
 
+        // socket.IO logic
         io.on("connection", (socket) => {
             console.log("user has loaded into home", socket.id);
 

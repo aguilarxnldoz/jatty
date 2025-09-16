@@ -15,7 +15,6 @@ export default function Home() {
                 <main className="max-w-full w-full">
                     {!menu && (
                         <>
-                            <h3>Start chatting</h3>
                             <JattyMenu setMenu={setMenu} />
                         </>
                     )}

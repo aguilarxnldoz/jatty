@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {MenuSetter} from "../../types/menu_setter";
 import {useNavigate} from "react-router-dom";
+import BackButton from "./back_button";
 export default function CreateChat({setMenu}: {setMenu: MenuSetter}) {
     const [username, setUsername] = useState<string>("anonymous");
     const [chatroomName, setChatroomName] = useState<string | null>(null);
@@ -24,8 +25,6 @@ export default function CreateChat({setMenu}: {setMenu: MenuSetter}) {
 
             const data = await response.json();
 
-            // const chatroomResponse = await fetch(`/jatty/chatroom/${data.roomId}`);
-            // if (!chatroomResponse.ok) throw new Error("u a bum");
             navigate(`/jatty/chatroom/${data.roomId}`);
         } catch (e) {
             console.error("Error: ", e);
@@ -37,42 +36,45 @@ export default function CreateChat({setMenu}: {setMenu: MenuSetter}) {
 
     return (
         <>
+            <BackButton setMenu={setMenu} />
             <div
                 id="create-chat-menu"
-                className="w-full"
+                className="w-full mt-15 flex justify-center"
             >
-                <div>
-                    <button
-                        className="text-2xl border-2 rounded-2xl p-3 my-4"
-                        onClick={() => setMenu(null)}
-                    >
-                        Back
-                    </button>
-                </div>
-
-                <form onSubmit={handleSubmit}>
-                    <label>
-                        <p>Name</p>
+                <form
+                    onSubmit={handleSubmit}
+                    className="flex flex-col gap-3"
+                >
+                    <label className="">
+                        <p className="text-lg font-bold">Enter a username</p>
                         <input
+                            id="create-chat-input"
                             type="text"
-                            placeholder="Enter your name or be anonymous"
-                            className="w-full"
+                            placeholder="anonymous"
+                            className="w-full lg:w-[50rem] p-1.5 rounded-md border-1 border-white shadow-md"
                             name="jattyName"
                             onChange={handleNameChange}
                         />
                     </label>
                     <label>
-                        <p>Create a name for your chatroom.</p>
+                        <p className="text-lg font-bold">Enter chatroom name.</p>
                         <input
+                            id="create-chat-input"
                             type="text"
                             placeholder="Chatroom name"
-                            className="w-full"
+                            className="w-full lg:w-[50rem] p-1.5 rounded-md border-1 border-white shadow-md"
                             name="chatroomName"
                             required
                             onChange={handleChatroomNameChange}
                         />
                     </label>
-                    <input type="submit" />
+                    <label className="mt-4">
+                        <input
+                            id="submit-create-chat"
+                            type="submit"
+                            className="rounded-2xl p-3 w-50 text-center border-1 shadow-black shadow-md"
+                        />
+                    </label>
                 </form>
             </div>
         </>
