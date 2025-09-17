@@ -21,30 +21,28 @@ export default function JoinChat({setMenu}: {setMenu: MenuSetter}) {
 
     return (
         <>
+            <BackButton setMenu={setMenu} />
             <div
                 id="join-chat-menu"
-                className="w-full"
+                className="w-full h-screen min-h-0"
             >
-                <BackButton setMenu={setMenu} />
-                <div>
+                <div className="my-5">
                     <h3 className="text-2xl">Join an open chat.</h3>
                 </div>
 
-                <div className="border-1 border-white">
-                    <ul className="w-full">
+                <div className="overflow-hidden">
+                    <ul className="w-full overflow-y-auto flex flex-col gap-5">
                         {chatrooms.map((room) => (
                             <li
                                 key={room.roomId}
-                                className="w-full"
+                                className="w-full rounded-2xl border-4 border-white shadow-md"
                             >
-                                <div className="bg-neutral-300 border-y-2 border-black p-6 w-full">
-                                    <Link
-                                        className="text-black"
-                                        to={`/jatty/chatroom/${room.roomId}`}
-                                    >
-                                        {room.chatroomName}
-                                    </Link>
-                                </div>
+                                <Link
+                                    className="text-black w-full"
+                                    to={`/jatty/chatroom/${room.roomId}`}
+                                >
+                                    <div className="bg-neutral-300 p-6 w-full rounded-2xl">{room.chatroomName}</div>
+                                </Link>
                             </li>
                         ))}
                     </ul>
