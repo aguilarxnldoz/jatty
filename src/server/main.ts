@@ -8,6 +8,7 @@ import {Server} from "socket.io";
 import {createChatApi} from "./api/create_chat.ts";
 import {chatroomsApi} from "./api/chatrooms.ts";
 import {chatroomRouter} from "./api/chatroom.ts";
+import {chatroomDataRouter} from "./api/chatroom_data.ts";
 
 /* back-end typeshi imports */
 import dotenv from "dotenv";
@@ -37,6 +38,7 @@ app.use(express.json());
 // API endpoints
 app.use("/api/createchat", createChatApi);
 app.use("/api/chatrooms", chatroomsApi);
+app.use("/api/chatroomdata", chatroomDataRouter);
 
 // page endpoints
 app.use("/jatty/chatroom", chatroomRouter);

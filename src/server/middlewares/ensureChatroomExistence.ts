@@ -1,17 +1,17 @@
 import {Request, Response, NextFunction} from "express";
 import {client} from "../database/redisClient.ts";
+import {getChatrooms} from "../logic/getChatrooms.ts";
+import IChatroom from "../../../public/types/IChatroom.ts";
 
 export const ensureChatroomExistence = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const {roomId} = req.params;
         if (!roomId) return res.status(400).json({success: false});
-        const chatroomList = await client.sMembers("chatrooms");
-        const chatrooms = chatroomList.map((room) => JSON.parse(room));
-        const match = chatrooms.find((room) => String(room.roomId) === roomId);
 
-        console.log(`ROOM ID FROM MIDDLWARE: ${roomId}`);
+        const chatroom = await getChatrooms(roomId);
+        console.log(`ROOM ID FROM MIDDLWARE: ${(chatroom as IChatroom).roomId}`);
 
-        if (!match) {
+        if (!chatroom) {
             return res.status(404).json({success: false});
         }
         next();
