@@ -60,8 +60,15 @@ const startServer = async () => {
         io.on("connection", (socket) => {
             console.log("user has loaded into home", socket.id);
 
-            socket.on("roomJoined", (data) => {
+            socket.on("room-joined", (data) => {
                 console.log(data.message);
+            });
+
+            socket.on("sent-message", (data) => {
+                console.log(data);
+                const {roomId, message} = data;
+                console.log(`🔥Incoming message from ${socket.id} from chatroom: ${roomId}`);
+                console.log(`🤰🏿 ${socket.id} has sent: ${message}`);
             });
 
             socket.on("disconnect", (reason) => {
