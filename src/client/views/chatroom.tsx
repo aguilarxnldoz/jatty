@@ -7,6 +7,7 @@ import IChatroom from "../../../public/types/IChatroom";
 export default function ChatRoom() {
     const navigate = useNavigate();
     const [chatroomData, setChatroomData] = useState<IChatroom | null>(null);
+    const [message, setMessage] = useState<string>("");
     const {roomId} = useParams<string>();
     const socketRef = useRef<SocketIOClient.Socket | null>(null);
 
@@ -27,13 +28,31 @@ export default function ChatRoom() {
         }
     };
 
+    const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => setMessage(e.target.value);
+
+    const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
+        try {
+            e.preventDefault();
+            const trimmedMessage = message.trim();
+            if (!trimmedMessage) return;
+
+            socketRef.current?.emit("sent-message", {
+                roomId: chatroomData?.roomId,
+                message: message,
+            });
+            setMessage("");
+        } catch (e) {
+            console.error("u sold bruh ", e);
+        }
+    };
+
     useEffect(() => {
         socketRef.current = io.connect(`http://localhost:${import.meta.env.VITE_API_PORT}`);
         getChatroomData();
     }, []);
 
     useEffect(() => {
-        socketRef.current?.emit("roomJoined", {message: `User: ${socketRef.current.id} has joined the chatroom`});
+        socketRef.current?.emit("room-joined", {message: `User: ${socketRef.current.id} has joined the chatroom`});
     }, [chatroomData]);
 
     return (
@@ -58,12 +77,14 @@ export default function ChatRoom() {
                     className="w-full bg-white rounded-2xl p-2 sticky bottom-3"
                 >
                     <form
-                        action=""
+                        onSubmit={handleSendMessage}
                         className="w-full flex flex-row space-x-full"
                     >
                         <div className="flex-1">
                             <input
                                 type="text"
+                                value={message}
+                                onChange={handleMessageChange}
                                 className="w-full p-3 text-black"
                                 placeholder="send a message"
                             />
@@ -75,7 +96,7 @@ export default function ChatRoom() {
                         >
                             <input
                                 type="submit"
-                                placeholder="->"
+                                value={"Send"}
                             />
                         </div>
                     </form>
