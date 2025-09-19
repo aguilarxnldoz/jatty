@@ -51,3 +51,7 @@ body {
     background-color: var(--platinum);
     color: var(--jet);
 }
+
+#send-message-button {
+    background-color: var(--alabaster);
+}
