@@ -55,3 +55,7 @@ body {
 #send-message-button {
     background-color: var(--alabaster);
 }
+
+#message-box {
+    background-color: var(--platinum);
+}
