@@ -3,6 +3,7 @@ import {useParams, useNavigate} from "react-router-dom";
 import {useRef, useEffect, useState} from "react";
 import io from "socket.io-client";
 import IChatroom from "../../../public/types/IChatroom";
+import IMessage from "../../../public/types/IMessage";
 
 export default function ChatRoom() {
     const navigate = useNavigate();
@@ -28,8 +29,10 @@ export default function ChatRoom() {
         }
     };
 
+    // keeps track of message state
     const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => setMessage(e.target.value);
 
+    // sends the message to the backend
     const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
         try {
             e.preventDefault();
@@ -46,14 +49,23 @@ export default function ChatRoom() {
         }
     };
 
+    // get the current chatroom data
     useEffect(() => {
         socketRef.current = io.connect(`http://localhost:${import.meta.env.VITE_API_PORT}`);
         getChatroomData();
     }, []);
 
+    // notifies when a connection occurs
     useEffect(() => {
-        socketRef.current?.emit("room-joined", {message: `User: ${socketRef.current.id} has joined the chatroom`});
-    }, [chatroomData]);
+        socketRef.current?.emit("room-joined", {message: `User: ${socketRef.current.id} has joined the chatroom`, roomId: chatroomData?.roomId});
+    }, [chatroomData, roomId]);
+
+    // recieves messages
+    useEffect(() => {
+        socketRef.current?.on("new-message", (data: IMessage) => {
+            console.log("NEW MESSAGE: ", data.message);
+        });
+    });
 
     return (
         <>

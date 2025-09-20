@@ -10,6 +10,9 @@ import {chatroomsApi} from "./api/chatrooms.ts";
 import {chatroomRouter} from "./api/chatroom.ts";
 import {chatroomDataRouter} from "./api/chatroom_data.ts";
 
+/* Types */
+import IMessage from "../../public/types/IMessage.js";
+
 /* back-end typeshi imports */
 import dotenv from "dotenv";
 dotenv.config();
@@ -60,15 +63,16 @@ const startServer = async () => {
         io.on("connection", (socket) => {
             console.log("user has loaded into home", socket.id);
 
-            socket.on("room-joined", (data) => {
-                console.log(data.message);
+            socket.on("room-joined", ({message, roomId}) => {
+                console.log(message);
+                if (roomId) socket.join(roomId);
             });
 
-            socket.on("sent-message", (data) => {
-                console.log(data);
-                const {roomId, message} = data;
+            socket.on("sent-message", ({roomId, message}) => {
                 console.log(`🔥Incoming message from ${socket.id} from chatroom: ${roomId}`);
                 console.log(`🤰🏿 ${socket.id} has sent: ${message}`);
+                io.to(roomId).emit("new-message", {sender: socket.id, roomId, message} as IMessage);
+                // socket.emit("sent-message", {message: message}); // NAH BRUH
             });
 
             socket.on("disconnect", (reason) => {
