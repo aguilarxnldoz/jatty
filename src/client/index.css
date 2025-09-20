@@ -59,3 +59,7 @@ body {
 #message-box {
     background-color: var(--platinum);
 }
+
+#message-box-alt {
+    background-color: var(--alabaster);
+}

@@ -3,6 +3,8 @@
 "jatty." is a chatroom web application that allows you to create chatrooms and have direct messages with people (pretty basic).
 The purpose of the project was to familiarize myself with modern technologies and improve my web-developing skills/arsenal by focusing on building features that require real-time dynamic content.
 
+![jatty. snippet](/public/readme_images/jattysnapshot.png)
+
 ## Techstacks
 
 -   vite-express
