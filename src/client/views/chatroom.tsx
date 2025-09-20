@@ -9,6 +9,7 @@ export default function ChatRoom() {
     const navigate = useNavigate();
     const [chatroomData, setChatroomData] = useState<IChatroom | null>(null);
     const [message, setMessage] = useState<string>("");
+    const [chatMessages, setChatMessages] = useState<IMessage[]>([]);
     const {roomId} = useParams<string>();
     const socketRef = useRef<SocketIOClient.Socket | null>(null);
 
@@ -64,8 +65,10 @@ export default function ChatRoom() {
     useEffect(() => {
         socketRef.current?.on("new-message", (data: IMessage) => {
             console.log("NEW MESSAGE: ", data.message);
+            setChatMessages((messages) => [...messages, data]);
         });
-    });
+        return;
+    }, []);
 
     return (
         <>
@@ -82,7 +85,19 @@ export default function ChatRoom() {
                 <div
                     id="chat-container"
                     className="flex-1 overflow-y-auto"
-                ></div>
+                >
+                    {chatMessages.map((message: IMessage) => (
+                        <>
+                            <div
+                                key={message.sender}
+                                id="message-box"
+                                className=""
+                            >
+                                <p>{message.message}</p>
+                            </div>
+                        </>
+                    ))}
+                </div>
 
                 <div
                     id="message-bar"
