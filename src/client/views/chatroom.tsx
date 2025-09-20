@@ -84,17 +84,27 @@ export default function ChatRoom() {
 
                 <div
                     id="chat-container"
-                    className="flex-1 overflow-y-auto"
+                    className="flex-1 overflow-y-auto flex flex-col gap-3"
                 >
                     {chatMessages.map((message: IMessage) => (
                         <>
-                            <div
-                                key={message.sender}
-                                id="message-box"
-                                className=""
-                            >
-                                <p>{message.message}</p>
-                            </div>
+                            {message.sender == socketRef.current?.id ? (
+                                <div
+                                    key={message.sender}
+                                    id="message-box"
+                                    className="w-auto p-2 self-end rounded-2xl text-black shadow-md"
+                                >
+                                    <p>{message.message}</p>
+                                </div>
+                            ) : (
+                                <div
+                                    key={message.sender}
+                                    id="message-box-alt"
+                                    className="w-auto p-2 self-start rounded-2xl text-black shadow-md"
+                                >
+                                    <p>{message.message}</p>
+                                </div>
+                            )}
                         </>
                     ))}
                 </div>
