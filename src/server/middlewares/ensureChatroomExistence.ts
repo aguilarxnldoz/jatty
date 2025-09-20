@@ -1,5 +1,4 @@
 import {Request, Response, NextFunction} from "express";
-import {client} from "../database/redisClient.ts";
 import {getChatrooms} from "../logic/getChatrooms.ts";
 import IChatroom from "../../../public/types/IChatroom.ts";
 
