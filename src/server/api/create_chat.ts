@@ -1,5 +1,5 @@
 import express from "express";
-import {randomRoomNumberGenerator} from "../room_number_generator.ts";
+import {randomRoomNumberGenerator} from "../logic/room_number_generator.ts";
 import {client} from "../database/redisClient.ts";
 import {Chatroom} from "../logic/chatroom.ts";
 
