@@ -3,6 +3,7 @@ import {MenuSetter} from "../../types/menu_setter";
 import IChatroom from "../../../../public/types/IChatroom";
 import {Link} from "react-router-dom";
 import BackButton from "./back_button";
+import EnterUsername from "./enter_username";
 
 export default function JoinChat({setMenu}: {setMenu: MenuSetter}) {
     const [chatrooms, setChatrooms] = useState<IChatroom[]>([]);
@@ -29,6 +30,8 @@ export default function JoinChat({setMenu}: {setMenu: MenuSetter}) {
                 <div className="my-5">
                     <h3 className="text-2xl">Join an open chat.</h3>
                 </div>
+
+                {/* <EnterUsername /> */}
 
                 <div className="overflow-hidden">
                     <ul className="w-full overflow-y-auto flex flex-col gap-5">
