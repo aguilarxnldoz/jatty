@@ -4,6 +4,8 @@ import {useRef, useEffect, useState} from "react";
 import io from "socket.io-client";
 import IChatroom from "../../../public/types/IChatroom";
 import IMessage from "../../../public/types/IMessage";
+import ChatContainer from "../components/chat/chat_container";
+import MessageBar from "../components/chat/message_bar";
 
 export default function ChatRoom() {
     const navigate = useNavigate();
@@ -27,6 +29,7 @@ export default function ChatRoom() {
             setChatroomData(data.chatroomData);
         } catch (e) {
             console.error(e);
+            navigate("/");
         }
     };
 
@@ -34,7 +37,7 @@ export default function ChatRoom() {
     const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => setMessage(e.target.value);
 
     // sends the message to the backend
-    const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
         try {
             e.preventDefault();
             const trimmedMessage = message.trim();
@@ -42,7 +45,7 @@ export default function ChatRoom() {
 
             socketRef.current?.emit("sent-message", {
                 roomId: chatroomData?.roomId,
-                message: message,
+                message: trimmedMessage,
             });
             setMessage("");
         } catch (e) {
@@ -82,62 +85,16 @@ export default function ChatRoom() {
                 </h2>
                 <Header />
 
-                <div
-                    id="chat-container"
-                    className="flex-1 overflow-y-auto flex flex-col gap-3"
-                >
-                    {chatMessages.map((message: IMessage) => (
-                        <>
-                            {message.sender == socketRef.current?.id ? (
-                                <div
-                                    key={message.sender}
-                                    id="message-box"
-                                    className="w-auto p-2 self-end rounded-2xl text-black shadow-md"
-                                >
-                                    <p>{message.message}</p>
-                                </div>
-                            ) : (
-                                <div
-                                    key={message.sender}
-                                    id="message-box-alt"
-                                    className="w-auto p-2 self-start rounded-2xl text-black shadow-md"
-                                >
-                                    <p>{message.message}</p>
-                                </div>
-                            )}
-                        </>
-                    ))}
-                </div>
+                <ChatContainer
+                    socketRef={socketRef}
+                    chatMessages={chatMessages}
+                />
 
-                <div
-                    id="message-bar"
-                    className="w-full bg-white rounded-2xl p-2 sticky bottom-3"
-                >
-                    <form
-                        onSubmit={handleSendMessage}
-                        className="w-full flex flex-row space-x-full"
-                    >
-                        <div className="flex-1">
-                            <input
-                                type="text"
-                                value={message}
-                                onChange={handleMessageChange}
-                                className="w-full p-3 text-black"
-                                placeholder="send a message"
-                            />
-                        </div>
-
-                        <div
-                            id="send-message-button"
-                            className="text-black rounded-full text-xs p-1"
-                        >
-                            <input
-                                type="submit"
-                                value={"Send"}
-                            />
-                        </div>
-                    </form>
-                </div>
+                <MessageBar
+                    handleSendMessage={handleSendMessage}
+                    handleMessageChange={handleMessageChange}
+                    message={message}
+                />
             </div>
         </>
     );
