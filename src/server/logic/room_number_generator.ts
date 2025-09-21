@@ -1,4 +1,4 @@
-import {client} from "./database/redisClient.ts";
+import {client} from "../database/redisClient.ts";
 
 const MAX_VALUE = 9999;
 const MIN_VALUE = 1000;

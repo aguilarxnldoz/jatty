@@ -72,6 +72,7 @@ const startServer = async () => {
                 console.log(`🔥Incoming message from ${socket.id} from chatroom: ${roomId}`);
                 console.log(`🤰🏿 ${socket.id} has sent: ${message}`);
                 io.to(roomId).emit("new-message", {sender: socket.id, roomId, message} as IMessage);
+                console.log();
                 // socket.emit("sent-message", {message: message}); // NAH BRUH
             });
 
